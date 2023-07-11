@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+  <style>
+    html {
+      color: black;
+      font-family: sans-serif;
+    }
+  
+    body {
+      margin: 0;
+    }
+  
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: black;
+    }
+  
+    h1 {
+      text-shadow: 10px 10px 0 rgba(0,0,0,1);
+      font-size: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <!-- contenteditable elementi web sitesi üzerinde değiştirilebilir yapar. -->
+    <h1 contenteditable>🔥WOAH!</h1>
+  </div>
+
+
+
+  <script>
+    const hero = document.querySelector('.hero');
+    const text = hero.querySelector('h1');
+    const walk = 100;
+
+    function shadow(e){
+      // Üzerinde mouse oynatılan elementin yüksekliğini ve genişliğini al.
+      const width = hero.offsetWidth;
+      const height = hero.offsetHeight;
+
+      // Cursor konumunu al.
+      let x = e.offsetX;
+      let y = e.offsetY;
+
+      // Eğer mouse oynatılan element event hedefine eşit değilse:
+      if(this !== e.target){
+        x = x + e.target.offsetLeft;
+        y = y + e.target.offsetTop;
+      }
+
+      // Text shadow ne kadar uzağa gitmeli?
+      const xWalk = Math.round((x / width * walk) - (walk / 2));
+      const yWalk = Math.round((y / height * walk) - (walk / 2));
+
+      // Stillendirme:
+      text.style.textShadow = `
+        ${xWalk}px ${yWalk}px 0 red,
+        ${xWalk * -1}px ${yWalk}px 0 green,
+        ${xWalk * -1}px ${yWalk * -1}px 0 blue,
+        ${xWalk * 2}px ${yWalk * 2}px 0 yellow
+        `;
+
+      // console.log(xWalk, yWalk);
+    }
+
+    hero.addEventListener('mousemove', shadow);
+  </script>
+</body>
+</html>

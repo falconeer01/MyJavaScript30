@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+  <style>
+  html {
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after { 
+    box-sizing: inherit; 
+  }
+
+  div {
+    width: 100%;
+    padding: 100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background: mistyrose;
+  }
+
+  .three {
+    background: coral;
+  }
+</style>
+</head>
+<body class="bod">
+
+  <div class="one">
+    oneeeeeeee
+    <div class="two">
+      two
+      <div class="three">
+        three
+      </div>
+    </div>
+  </div>
+
+
+
+<button></button>
+<script>
+  // let divs = document.querySelectorAll("div");
+  // divs.forEach(div => div.addEventListener("click", (e) => {
+  //   e.stopPropagation();
+  //   console.log(e.target.innerText);
+  // }));
+
+    const divs = document.querySelectorAll('div');
+    // const button = document.querySelector('button');
+
+    function see(e){
+      // stopPropagation, nested elementlerin içinde sadece üstüne tıklanan elementi döndürür. 
+      const targetDiv = e.target.closest('div');
+      console.log(targetDiv.innerText);
+    }
+
+    // capture propertysi nested elementlerin içinde üstüne tıklanan elemana kadar ondan önce gelen elemanları döndürür. Eğer capture değeri false ise döndürme sırası en içteki elementten başlar.
+    divs.forEach(div => div.addEventListener('click', see, {capture: false}));
+
+    // once propertysi butona basıldığında fonksiyonun sadece bir kez çalışmasını sağlar.
+    // button.addEventListener('click', () => {console.log('Clicked')}, {once: false});
+</script>
+</body>
+</html>

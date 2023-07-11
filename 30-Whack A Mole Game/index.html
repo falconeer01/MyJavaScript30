@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Whack A Mole!</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Whack-a-mole! <span class="score">0</span></h1>
+  <div class="startGame">
+    <button onClick="startGame()" class="startButton">Start!</button>
+  </div>
+
+  <div class="game">
+    <div class="hole hole1">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole2">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole3">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole4">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole5">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole6">
+      <div class="mole"></div>
+    </div>
+  </div>
+
+  <script>
+    // Tüm delikleri seç.
+    const holes = document.querySelectorAll('.hole');
+
+    // Skor tebelasını seç.
+    const scoreBoard = document.querySelector('.score');
+
+    // Tüm köstebekleri seç.
+    const moles = document.querySelectorAll('.mole');
+
+    // Tıklanan son deliği bir değişkende tut.
+    let lastHole;
+
+    // Zamanın dolup dolmadığını tutan boolean değişken:
+    let isTimeUp = false;
+
+    // Kullanıcı skorunu tutan değişken:
+    let score = 0;
+
+    // Köstebeklerin çıkacağı rastgele zamanı döndüren fonksiyon:
+    function randomTime(min, max){
+      return Math.round(Math.random() * (max - min) + min);
+    }
+
+    // Köstebeklerin çıkacağı rastgele deliği döndüren fonksiyon:
+    function randomHole(holes){
+      // holes içinden rastgele bir index seç.
+      const idx = Math.floor(Math.random() * holes.length);
+
+      // Seçilen indexteki deliği bir değişkende tut.
+      const hole = holes[idx];
+
+      // Eğer seçilen delik önceki delikle aynıysa,
+      if(hole === lastHole){
+        console.log('Same one');
+        // Fonksiyonu tekrar çalıştır.
+        randomHole(holes);
+      }
+      // Seçilen deliği eski deliğe eşitle.
+      lastHole = hole;
+
+      // Seçilen deliği döndür.
+      return hole;
+    }
+    
+    // Köstebeklerin delikten çıkmasını sağlayan fonksiyon:
+    function peep(){
+      // Rastgele bir süre seç.
+      const time = randomTime(200, 1000);
+
+      // Rastgele bir delik seç.
+      const hole = randomHole(holes);
+
+      // Seçilen deliğe gerekli class'ı ekle.
+      hole.classList.add('up');
+
+      // Seçilen süre geçtikten sonra,
+      setTimeout(() => {
+        // Seçilen delikten class'ı kaldır.
+        hole.classList.remove('up');
+
+        // Eğer zaman dolduysa fonksiyonu tekrar çağır.
+        if(!isTimeUp) peep();
+      }, time);
+    }
+
+    // Oyunu başlatan fonksiyon:
+    function startGame(){
+      // Başlangıçta skor tabelasını 0'a eşitle.
+      scoreBoard.textContent = score;
+
+      // Zaman dolmadı.
+      isTimeUp = false;
+
+      // Skoru 0'a eşitle.
+      score = 0;
+
+      // Köstebeklerin çıkmasını sağlayan fonksiyonu çağır.
+      peep();
+
+      // Belirli bir süre sonra oyunu bitir.
+      setTimeout(() => {
+        isTimeUp = true;
+      }, 10000);
+    }
+
+    // Kullanıcı köstebeğe tıkladığında köstebeğin deliğe geri girmesini ve skoru artırmasını sağlayan fonksiyon:
+    function bonk(e){
+      // Kullanıcının hile yapmasını engelle.
+      if(!e.isTrusted) return;
+
+      // Skoru 1'er artır.
+      if(this.parentNode.classList.contains('up')){
+        score++;
+      }
+
+      // Köstebeklerden gerekli class'ı çıkar.
+      this.parentNode.classList.remove('up');
+
+      // Skor tabelasını skora eşitle.
+      scoreBoard.textContent = score;
+    }
+
+    // Her köstebeğe tıklandığında üstteki fonksiyonu tetikle.
+    moles.forEach(mole => mole.addEventListener('click', bonk));
+  </script>
+</body>
+</html>

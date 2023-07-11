@@ -1,0 +1,35 @@
+/* :root ile css değişkenleri (variable) oluşturulabilir. */
+:root{
+    --base: #ffc600; /* Renk değişkeni */
+    --spacing: 10px; /* Boşluk bırakma değişkeni */
+    --blur: 10px; /* Blur değişkeni */
+}
+
+img{
+    background: var(--base); /* img elementinin arkaplan rengi base değişkenindeki renk olarak ayarlandı */
+    padding: var(--spacing); /* img elementinin paddingi spacing değişkenindeki boyut olarak ayarlandı */
+    filter: blur(var(--blur)); /* img elementinin bluru blur değişkenindeki boyut olarak ayarlandı */
+    width: 200px;
+    height: 300px;
+}
+
+.hl{
+    color: var(--base); /* hl sınıfına sahip elementlerin arkaplan renkleri base değişkenindeki renk olarak ayarlandı */
+}
+
+body{
+    text-align: center;
+    background: #193549;
+    color: white;
+    font-family: 'helvetica neue', sans-serif;
+    font-weight: 100;
+    font-size: 50px;
+}
+
+.controls{
+    margin-bottom: 50px;
+}
+
+.input{
+    width: 100px;
+}

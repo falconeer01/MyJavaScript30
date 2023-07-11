@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Speed Scrubber</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="wrapper">
+    <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop controls></video>
+    <div class="speed">
+      <div class="speed-bar">1×</div>
+    </div>
+  </div>
+
+  <script>
+    // Hız barını seç.
+    const speed = document.querySelector('.speed');
+
+    // Hız barının içinde hızı gösteren text olan div'i seç.
+    const bar = document.querySelector('.speed-bar');
+
+    // Video elementini seç.
+    const video = document.querySelector('.flex');
+
+    let isDown = false;
+
+    speed.addEventListener('mousedown', function(){
+        isDown = true;
+    });
+
+    speed.addEventListener('mouseup', function(){
+        isDown = false;
+    });
+
+    // Speed elementinin mousemove eventinde speed-bar'ı hareket ettirecek fonksiyon:
+    speed.addEventListener('mousemove', function(e){
+        if(isDown){
+        // Speed elementinin içinde mouse'un konumunu tutan değişken:
+        const y = e.pageY - this.offsetTop;
+        // console.log(y);
+
+        // Piksel şeklinde gelen mouse konumunu 0 ile 1 arasındaki bir sayıya çevir.
+        const percent = y / this.offsetHeight;
+        // console.log(percent);
+
+        // Speed elementinin içindeki min ve max değerlerini ata.
+        const min = 0.4;
+        const max = 4;
+
+        // Mouse konumunu yüzdelik haline getir.
+        const height = `${Math.round(percent * 100)}%`;
+        // console.log(height);
+
+        // bar elementinin yüksekliğini üstteki değişkene ata.
+        bar.style.height = height;
+
+        // Oynatma hızını hesapla.
+        const playBackRate = percent * (max - min) + min;
+        // console.log(`playbackRate: ${playBackRate}`);
+
+        // Oynatma hızını bar elementinin içindeki text'e ata.
+        bar.textContent = `${playBackRate.toFixed(2)}x`;
+
+        // Videonun oynatma hızını hesaplanan oynatma hızına eşitle.
+        video.playbackRate = playBackRate;}
+    });
+  </script>
+</body>
+</html>

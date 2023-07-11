@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+  <script>
+    let array =  [];
+    let secretCode = 'YRRK';
+
+    function printKey(e){
+        // console.log(e.key);
+        array.push(e.key);
+        // console.log(array);
+        array.splice(-secretCode.length - 1, array.length - secretCode.length);
+        if(array.join('').includes(secretCode)){
+            console.log('ANNNAMIKNK');
+        }
+    }
+
+    window.addEventListener('keyup', printKey);
+  </script>
+</body>
+</html>

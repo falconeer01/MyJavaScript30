@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Variables Tekrar</title>
+    <style>
+        :root{
+            --spacing: 10px;
+            --blur: 10px;
+            --baseColor: #ffc600;
+        }
+
+        img{
+            padding: var(--spacing);
+            filter: blur(var(--blur));
+            background-color: var(--baseColor);
+        }
+
+        .hiL{
+            color: var(--baseColor);
+        }
+
+        body{
+            text-align: center;
+            background: #193549;
+            color: white;
+            font-family: 'helvetica neue', sans-serif;
+            font-weight: 100;
+            font-size: 50px;
+        }
+
+        .controls{
+            margin-bottom: 50px;
+        }
+
+        .input{
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Update CSS variables with <span class="hiL">JS</span></h2>
+
+    <div class="controls">
+        <label for="spacing">Spacing:</label>
+        <input type="range" 
+               name="spacing" 
+               id="spacing"
+               min="10"
+               max="200"
+               value="10"
+               data-sizing="px"
+        >
+
+        <label for="blur">Blur:</label>
+        <input type="range" 
+               name="blur" 
+               id="blur"
+               min="0"
+               max="25"
+               value="10"
+               data-sizing="px"    
+        >
+
+        <label for="baseColor">Base Color</label>
+        <input type="color" 
+               name="baseColor" 
+               id="baseColor"
+               value="#ffc600"       
+        >
+    </div>
+
+    <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+
+
+
+    <script>
+        const inputs = document.querySelectorAll(".controls input");
+
+        function handleUpdate(){
+            const suffix = this.dataset.sizing|| "";
+
+            document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+
+            console.log(this.value);
+        }
+
+        inputs.forEach(input => input.addEventListener('change', handleUpdate));
+        inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+    </script>
+</body>
+</html>

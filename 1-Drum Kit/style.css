@@ -1,0 +1,23 @@
+.keyboard{
+    display: flex;
+    justify-content: center;
+    height: 600px;
+}
+
+.key{
+    border: 4px solid black;
+    border-radius: 5px;
+    transition: all 0.07s; /* transform efektinin süresini ayarlar */
+    background: rgba(0, 0, 0, 0.4);
+    text-shadow: 0 0 5px black;
+    height: 80px;
+    width: 80px;
+    text-align: center;
+    margin: auto;
+}
+
+.playing{
+    transform: scale(1.1); /* Elementi her yönde 1.1 boyutunda büyültür. */
+    border-color: #ffc600;
+    box-shadow: 0 0 10px #ffc600;
+}
